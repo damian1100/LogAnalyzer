@@ -1,4 +1,4 @@
-"""Aggregation of parsed web-server records."""
+"""aggregation of parsed web-server records"""
 from __future__ import annotations
 
 from collections import Counter
@@ -6,7 +6,7 @@ from typing import Iterable
 
 
 def analyze_records(records: Iterable[dict[str, object]]) -> dict[str, object]:
-    """Compute useful request, status, endpoint and client summaries."""
+    """compute request, status, endpoint, client summaries"""
     status_counts: Counter[int] = Counter()
     ip_counts: Counter[str] = Counter()
     url_counts: Counter[str] = Counter()
@@ -34,7 +34,7 @@ def analyze_records(records: Iterable[dict[str, object]]) -> dict[str, object]:
 
 
 def merge_reports(reports: Iterable[dict[str, object]]) -> dict[str, object]:
-    """Merge partial reports produced independently by worker processes."""
+    """merge partial reports produced independently"""
     status_counts: Counter[int] = Counter()
     ip_counts: Counter[str] = Counter()
     url_counts: Counter[str] = Counter()

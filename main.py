@@ -1,4 +1,4 @@
-"""Command-line entry point for LogAnalyzer."""
+
 from __future__ import annotations
 
 import argparse

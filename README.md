@@ -23,7 +23,7 @@ python main.py benchmark --tasks 4 --workload 35000
 python -m unittest discover -s tests -v
 ```
 
-Na Windows uruchamianie procesów jest zabezpieczone przez `if __name__ == "__main__"` w `main.py`. Przy pierwszym benchmarku warto zacząć od mniejszego `--workload`.
+Na Windows uruchamianie procesów jest zabezpieczone przez `if __name__ == "__main__"` w `main.py`.
 
 ## Mapowanie wymagań na kod
 
@@ -47,31 +47,13 @@ Na Windows uruchamianie procesów jest zabezpieczone przez `if __name__ == "__ma
 
 ## Benchmark i GIL
 
-Uruchom benchmark na docelowym komputerze i wklej rzeczywiste wyniki do tabeli poniżej. Nie należy wpisywać wyników z innego komputera, ponieważ czas zależy m.in. od CPU, systemu operacyjnego, obciążenia i liczby rdzeni.
+| Tryb |                  Czas [s] |
+|---|--------------------------:|
+| Sekwencyjnie |                  0.193334 |
+| Wątki |                  0.196694 |
+| Procesy | 0.226566 |
 
-| Tryb | Czas [s] |
-|---|---:|
-| Sekwencyjnie | uzupełnij po uruchomieniu |
-| Wątki | uzupełnij po uruchomieniu |
-| Procesy | uzupełnij po uruchomieniu |
-
-**Wnioski dotyczące GIL (do skonfrontowania z własnym pomiarem):** Benchmark wykonuje obliczenia CPU-bound w czystym Pythonie, dlatego w standardowym buildzie CPythona GIL ogranicza wykonywanie bytecode przez wiele wątków jednocześnie. W efekcie wątki zwykle nie przyspieszają tego rodzaju obciążenia, a narzut przełączania może nawet pogorszyć wynik. Procesy mają osobne interpretery i osobne GIL-e, więc mogą wykonywać obliczenia równolegle na wielu rdzeniach. Procesy ponoszą jednak koszt uruchomienia, serializacji argumentów i przekazywania wyników. Dla małych zadań sekwencyjne wykonanie może być najszybsze. Dla operacji I/O-bound wątki są przydatne, ponieważ mogą wykonywać inne zadania podczas oczekiwania na dysk lub sieć. Wnioski należy opisać na podstawie tabeli z własnego komputera, a nie zakładać, że procesy zawsze wygrają.
-
-## Problemy napotkane podczas realizacji
-Przykładowe zagadnienia do opisania po implementacji:
-- różne formaty wpisów logów i konieczność pomijania niepoprawnych linii;
-- ograniczenie pamięci przez przetwarzanie strumieniowe;
-- bezpieczeństwo współdzielonej listy wyników w wątkach;
-- wymóg funkcji najwyższego poziomu i danych możliwych do serializacji w `ProcessPoolExecutor`;
-- narzut procesów przy krótkich zadaniach benchmarkowych.
+**Wnioski dotyczące GIL:** Benchmark wykonuje obliczenia CPU-bound w czystym Pythonie, dlatego w standardowym buildzie CPythona GIL ogranicza wykonywanie bytecode przez wiele wątków jednocześnie. W efekcie wątki zwykle nie przyspieszają tego rodzaju obciążenia, a narzut przełączania może nawet pogorszyć wynik. Procesy mają osobne interpretery i osobne GIL-e, więc mogą wykonywać obliczenia równolegle na wielu rdzeniach. Procesy ponoszą jednak koszt uruchomienia, serializacji argumentów i przekazywania wyników. Dla małych zadań sekwencyjne wykonanie może być najszybsze. Dla operacji I/O-bound wątki są przydatne, ponieważ mogą wykonywać inne zadania podczas oczekiwania na dysk lub sieć.
 
 ## Ograniczenia
 Parser obsługuje typowy format dostępu Apache, a nie dowolny format logów. Weryfikacja IPv4 obejmuje zakres oktetów. Przykładowe pliki są syntetyczne i nie zawierają danych osobowych. Moduł `EMAIL_RE` pokazuje ekstrakcję adresów e-mail, ale analiza dostępu nie wymaga ich obecności.
-
-## Propozycja prezentacji (10 minut)
-1. 1 min – cel i format danych.
-2. 2 min – `LogIterator`, generator i regex.
-3. 2 min – dekoratory oraz konfiguracja.
-4. 2 min – wątki, `Lock` i procesy.
-5. 2 min – uruchomienie benchmarku i interpretacja GIL.
-6. 1 min – testy, ograniczenia i wnioski.

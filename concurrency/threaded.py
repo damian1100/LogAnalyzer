@@ -1,4 +1,4 @@
-"""I/O-bound concurrent log reading using threads and a lock."""
+
 from __future__ import annotations
 
 import logging
@@ -15,7 +15,7 @@ logger = logging.getLogger(__name__)
 def parse_files_concurrently(
     paths: list[Path], max_workers: int = 4, config: LogConfig | None = None
 ) -> list[dict[str, object]]:
-    """Parse multiple files concurrently; lock protects shared result list."""
+    """parse multiple files concurrently"""
     if max_workers < 1:
         raise ValueError("max_workers musi być dodatni")
     config = config or LogConfig()

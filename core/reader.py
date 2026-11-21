@@ -1,4 +1,4 @@
-"""Chunk-based file iterator."""
+
 from __future__ import annotations
 
 from pathlib import Path
@@ -6,7 +6,7 @@ from typing import Iterator
 
 
 class LogIterator(Iterator[str]):
-    """Read a text file lazily in chunks, retaining only the current chunk."""
+
 
     def __init__(self, path: Path, chunk_size: int = 128, encoding: str = "utf-8") -> None:
         if chunk_size < 1:
@@ -34,7 +34,7 @@ class LogIterator(Iterator[str]):
         return self._lines.pop(0).rstrip("\n")
 
     def close(self) -> None:
-        """Close the underlying file handle, if opened."""
+
         if self._file is not None:
             self._file.close()
             self._file = None

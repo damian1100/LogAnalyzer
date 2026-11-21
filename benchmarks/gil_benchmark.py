@@ -1,4 +1,4 @@
-"""A reproducible CPU-bound benchmark for demonstrating GIL effects."""
+
 from __future__ import annotations
 
 from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor
@@ -6,7 +6,7 @@ from time import perf_counter
 
 
 def count_primes(limit: int) -> int:
-    """Count primes below limit using deliberately pure-Python CPU work."""
+    """count primes below limit"""
     if limit < 2:
         return 0
     count = 0
@@ -39,7 +39,7 @@ def _timed_map(executor_kind: str, tasks: list[int]) -> tuple[float, list[int]]:
 
 
 def run_benchmark(tasks: int = 4, workload: int = 35000) -> dict[str, object]:
-    """Run equal CPU workloads sequentially, with threads and with processes."""
+    """run equal CPU workloads sequentially"""
     if tasks < 1 or workload < 2:
         raise ValueError("tasks >= 1 i workload >= 2 są wymagane")
     inputs = [workload] * tasks

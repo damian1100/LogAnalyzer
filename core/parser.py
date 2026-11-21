@@ -1,4 +1,4 @@
-"""Lazy parsing pipeline for access log files."""
+
 from __future__ import annotations
 
 import logging
@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 
 class LogParser:
-    """Parser object demonstrating a self-aware method decorator."""
+
 
     def __init__(self, config: LogConfig) -> None:
         self.config = config
@@ -40,7 +40,7 @@ class LogParser:
 
 @timed
 def parse_file(path: Path, config: LogConfig | None = None) -> Iterator[dict[str, object]]:
-    """Yield valid records; malformed lines are skipped (or raised in strict mode)."""
+
     config = config or LogConfig()
     path = Path(path)
     size_limit = config.max_file_size_mb * 1024 * 1024
@@ -59,7 +59,7 @@ def parse_file(path: Path, config: LogConfig | None = None) -> Iterator[dict[str
 
 
 def parse_lines(lines: Iterator[str], config: LogConfig | None = None) -> Iterator[dict[str, object]]:
-    """Generator for an in-memory stream, useful in tests and pipelines."""
+
     parser = LogParser(config or LogConfig())
     for line in lines:
         record = parser.parse_line(line)
